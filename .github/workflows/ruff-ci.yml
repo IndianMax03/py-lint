@@ -1,0 +1,29 @@
+name: Ruff (Linter & Formatter)
+
+on:
+  push:
+    paths:
+      - 'ruff_example/**'
+  pull_request:
+    paths:
+      - 'ruff_example/**'
+
+jobs:
+  ruff-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Ruff
+        run: pip install ruff
+
+      - name: Run Ruff Linter
+        run: ruff check ruff_example/ --config ruff_example/pyproject.toml
+
+      - name: Run Ruff Formatter
+        run: ruff format --check ruff_example/ --config ruff_example/pyproject.toml

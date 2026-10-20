@@ -1,0 +1,26 @@
+name: Isort Imports Check
+
+on:
+  push:
+    paths:
+      - 'isort_example/**'
+  pull_request:
+    paths:
+      - 'isort_example/**'
+
+jobs:
+  isort-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Isort
+        run: pip install isort
+
+      - name: Run Isort Check
+        run: isort --check-only isort_example/ --settings-file isort_example/pyproject.toml

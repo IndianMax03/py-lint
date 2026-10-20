@@ -1,0 +1,26 @@
+name: Mypy Type Checking
+
+on:
+  push:
+    paths:
+      - 'mypy_example/**'
+  pull_request:
+    paths:
+      - 'mypy_example/**'
+
+jobs:
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Mypy
+        run: pip install mypy
+
+      - name: Run Mypy
+        run: mypy mypy_example/ --config-file mypy_example/pyproject.toml
